@@ -5,8 +5,6 @@ boxes_states = {}
 
 def unlockBox(boxes, num, prev_key):
     """ unlock a box """
-    if not boxes.get(prev_key):
-        return
     for key in boxes[prev_key]:
         if key >= num or boxes_states.get(key):
             continue
@@ -16,6 +14,7 @@ def unlockBox(boxes, num, prev_key):
 
 def canUnlockAll(boxes):
     """ check if we can unlock all boxes """
+    boxes_states = {}
     boxes_states[0] = True
     unlockBox(boxes, len(boxes), 0)
     for i in range(len(boxes)):
