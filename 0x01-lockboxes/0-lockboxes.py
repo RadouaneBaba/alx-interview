@@ -14,10 +14,6 @@ def unlockBox(boxes, num, prev_key):
 
 def canUnlockAll(boxes):
     """ check if we can unlock all boxes """
-    boxes_states = {}
     boxes_states[0] = True
     unlockBox(boxes, len(boxes), 0)
-    for i in range(len(boxes)):
-        if not boxes_states.get(i):
-            return False
-    return True
+    return len(boxes_states) == len(boxes)
