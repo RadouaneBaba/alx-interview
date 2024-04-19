@@ -5,6 +5,8 @@ boxes_states = {}
 
 def unlockBox(boxes, num, prev_key):
     """ unlock a box """
+    if not boxes.get(prev_key):
+        return
     for key in boxes[prev_key]:
         if key >= num or boxes_states.get(key):
             continue
