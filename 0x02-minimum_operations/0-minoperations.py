@@ -16,4 +16,3 @@ def minOperations(n):
         steps += prime_factors[idx]
 
     return steps
-
