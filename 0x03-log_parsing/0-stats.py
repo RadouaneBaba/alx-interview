@@ -2,12 +2,12 @@
 """ log parsing implementation """
 import sys
 import re
-import signal
 
 count = 0
 pattern = r'(\d+\.\d+\.\d+\.\d+) - \[(.+?)] "GET \/projects\/260 HTTP\/1\.1" (\d{3}) (\d+)'
 count_data = {}
 file_size = 0
+
 
 def print_results():
     """ print results function """
@@ -21,27 +21,21 @@ def print_results():
     count = 0
     file_size = 0
 
-def signal_handler(sig, frame):
-    """ signal handler function"""
-    try:
-        print_results()
-    except Exception as e:
-        pass
-    raise(KeyboardInterrupt)
 
-signal.signal(signal.SIGINT, signal_handler)
+try:
+    for line in sys.stdin:
+        result = re.match(pattern, line)
+        if not result:
+            continue
 
-for line in sys.stdin:
-    result = re.match(pattern, line)
-    if not result:
-        continue
+        file_size += int(result.group(4))
+        status = str(result.group(3))
 
-    file_size += int(result.group(4))
-    status = str(result.group(3))
-
-    if status not in count_data:
-        count_data[status] = 0
-    count_data[status] += 1
-    count += 1
-    if count == 10:
-        print_results()
+        if status not in count_data:
+            count_data[status] = 0
+        count_data[status] += 1
+        count += 1
+        if count == 10:
+            print_results()
+except KeyboardInterrupt:
+    print_results()
