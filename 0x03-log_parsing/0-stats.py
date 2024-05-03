@@ -11,15 +11,10 @@ file_size = 0
 
 def print_results():
     """ print results function """
-    global count, file_size, count_data
     print(f"File size: {file_size}")
     sorted_keys = sorted(count_data)
     for key in sorted_keys:
         print(f"{key}: {count_data[key]}")
-
-    count_data = {}
-    count = 0
-    file_size = 0
 
 
 try:
@@ -37,5 +32,6 @@ try:
         count += 1
         if count == 10:
             print_results()
+            count = 0
 finally:
     print_results()
