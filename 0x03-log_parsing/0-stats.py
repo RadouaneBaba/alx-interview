@@ -4,7 +4,7 @@ import sys
 import re
 
 count = 0
-pattern = r'(\d+\.\d+\.\d+\.\d+) - \[(.+?)] "GET \/projects\/260 HTTP\/1\.1" (\d{3}) (\d+)'
+pattern = r'(.+?) - \[(.+?)] "GET \/projects\/260 HTTP\/1\.1" (\d{3}) (\d+)'
 count_data = {}
 file_size = 0
 
@@ -37,5 +37,5 @@ try:
         count += 1
         if count == 10:
             print_results()
-except KeyboardInterrupt:
+finally:
     print_results()
