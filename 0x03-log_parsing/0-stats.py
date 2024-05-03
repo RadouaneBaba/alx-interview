@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" log parsing implementation """
 import sys
 import re
 import signal
@@ -9,6 +10,7 @@ count_data = {}
 file_size = 0
 
 def print_results():
+    """ print results function """
     global count, file_size, count_data
     print(f"File size: {file_size}")
     sorted_keys = sorted(count_data)
@@ -20,6 +22,7 @@ def print_results():
     file_size = 0
 
 def signal_handler(sig, frame):
+    """ signal handler function"""
     try:
         print_results()
     except Exception as e:
