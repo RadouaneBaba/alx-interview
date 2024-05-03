@@ -4,7 +4,7 @@ import sys
 import re
 
 count = 0
-pattern = r'(\d+\.\d+\.\d+\.\d+) - \[(.+?)] "GET \/projects\/260 HTTP\/1\.1" (\d{3}) (\d+)'
+pattern = r'(.+?) - \[(.+?)] "GET \/projects\/260 HTTP\/1\.1" (\d{3}) (\d+)'
 count_data = {}
 file_size = 0
 
