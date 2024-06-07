@@ -2,31 +2,25 @@
 """making change implementation"""
 
 
-def min_skip(a, b):
-    if a == -1 and b == -1:
-        return -1
-    if a == -1 and b > -1:
-        return b + 1
-    if a > -1 and b == -1:
-        return a
-    return min(a, b + 1)
-
-
 def makeChange(coins, total, cache=None):
-    """make change implementation"""
-    if total <= 0:
-        return 0
-
+    """
+    makechange implementation
+    """
     if cache is None:
         cache = {}
 
+    if total <= 0:
+        return 0
+
     if total in cache:
         return cache[total]
-    solution = -1
+
+    min_coins = float("inf")
     for coin in coins:
-        new_total = total - coin
-        if new_total < 0:
-            continue
-        solution = min_skip(solution, makeChange(coins, new_total, cache))
-    cache[total] = solution
-    return solution
+        if coin <= total:
+            sub_result = makeChange(coins, total - coin, cache)
+            if sub_result != -1:
+                min_coins = min(min_coins, sub_result + 1)
+
+    cache[total] = -1 if min_coins == float("inf") else min_coins
+    return cache[total]
