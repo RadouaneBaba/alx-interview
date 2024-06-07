@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 """making change implementation"""
 
-cache = {}
-
 
 def min_skip(a, b):
     if a == -1 and b == -1:
@@ -14,10 +12,13 @@ def min_skip(a, b):
     return min(a, b + 1)
 
 
-def makeChange(coins, total):
+def makeChange(coins, total, cache=None):
     """make change implementation"""
     if total <= 0:
         return 0
+
+    if cache is None:
+        cache = {}
 
     if total in cache:
         return cache[total]
@@ -26,6 +27,6 @@ def makeChange(coins, total):
         new_total = total - coin
         if new_total < 0:
             continue
-        solution = min_skip(solution, makeChange(coins, new_total))
+        solution = min_skip(solution, makeChange(coins, new_total, cache))
     cache[total] = solution
     return solution
