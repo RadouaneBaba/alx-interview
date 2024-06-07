@@ -2,25 +2,21 @@
 """making change implementation"""
 
 
-def makeChange(coins, total, cache=None):
+def makeChange(coins, total):
     """
-    makechange implementation
+    make change implementation
     """
-    if cache is None:
-        cache = {}
-
+    # Handle base cases
     if total <= 0:
         return 0
+    if not coins:
+        return -1
+    dp = [float("inf")] * (total + 1)
+    dp[0] = 0
 
-    if total in cache:
-        return cache[total]
+    for i in range(1, total + 1):
+        for coin in coins:
+            if coin <= i:
+                dp[i] = min(dp[i], dp[i - coin] + 1)
 
-    min_coins = float("inf")
-    for coin in coins:
-        if coin <= total:
-            sub_result = makeChange(coins, total - coin, cache)
-            if sub_result != -1:
-                min_coins = min(min_coins, sub_result + 1)
-
-    cache[total] = -1 if min_coins == float("inf") else min_coins
-    return cache[total]
+    return dp[total] if dp[total] != float("inf") else -1
