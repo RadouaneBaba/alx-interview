@@ -1,46 +1,42 @@
 #!/usr/bin/python3
-""" Prime Game Implementation """
-
-
-def generate_primes(n):
-    """doc doc"""
-    if n < 2:
-        return []
-    sieve = [True] * (n + 1)
-    sieve[0] = sieve[1] = False
-    for i in range(2, int(n**0.5) + 1):
-        if sieve[i]:
-            for j in range(i * i, n + 1, i):
-                sieve[j] = False
-    return [i for i in range(2, n + 1) if sieve[i]]
-
-
-def play_round(n):
-    """doc doc"""
-    primes = generate_primes(n)
-    turn = 0
-    while primes:
-        prime = primes[0]
-        primes = [p for p in primes if p % prime != 0]
-        turn = 1 - turn
-    return "Ben" if turn == 0 else "Maria"
+"""0. Prime Game - Maria and Ben are playing a game"""
 
 
 def isWinner(x, nums):
-    """doc doc"""
-    maria_wins = 0
-    ben_wins = 0
-
-    for n in nums:
-        winner = play_round(n)
-        if winner == "Maria":
-            maria_wins += 1
-        else:
-            ben_wins += 1
-
-    if maria_wins > ben_wins:
-        return "Maria"
-    elif ben_wins > maria_wins:
-        return "Ben"
-    else:
+    """x - rounds
+    nums - numbers list
+    """
+    if x <= 0 or nums is None:
         return None
+    if x != len(nums):
+        return None
+
+    ben = 0
+    maria = 0
+
+    a = [1 for x in range(sorted(nums)[-1] + 1)]
+    a[0], a[1] = 0, 0
+    for i in range(2, len(a)):
+        rm_multiples(a, i)
+
+    for i in nums:
+        if sum(a[0 : i + 1]) % 2 == 0:
+            ben += 1
+        else:
+            maria += 1
+    if ben > maria:
+        return "Ben"
+    if maria > ben:
+        return "Maria"
+    return None
+
+
+def rm_multiples(ls, x):
+    """removes multiple
+    of primes
+    """
+    for i in range(2, len(ls)):
+        try:
+            ls[i * x] = 0
+        except (ValueError, IndexError):
+            break
