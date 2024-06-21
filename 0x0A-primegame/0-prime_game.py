@@ -20,7 +20,7 @@ def isWinner(x, nums):
         rm_multiples(a, i)
 
     for i in nums:
-        if sum(a[0 : i + 1]) % 2 == 0:
+        if sum(a[0:i + 1]) % 2 == 0:
             ben += 1
         else:
             maria += 1
